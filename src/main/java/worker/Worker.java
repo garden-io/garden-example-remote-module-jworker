@@ -30,7 +30,7 @@ class Worker {
 
   static void updateVote(Connection dbConn, String voterID, String vote) throws SQLException {
     PreparedStatement insert = dbConn.prepareStatement(
-      "INSERT INTO votes (id, vote) VALUES (?, ?)");
+      "INSERT INTO votes (id, vote, created_at) VALUES (?, ?, NOW())");
     insert.setString(1, voterID);
     insert.setString(2, vote);
 
@@ -66,23 +66,9 @@ class Worker {
     Connection conn = null;
 
     try {
-
       Class.forName("org.postgresql.Driver");
       String url = "jdbc:postgresql://" + host + "/postgres";
-
-      while (conn == null) {
-        try {
-          conn = DriverManager.getConnection(url, "postgres", "");
-        } catch (SQLException e) {
-          System.err.println("Waiting for db");
-          sleep(1000);
-        }
-      }
-
-      PreparedStatement st = conn.prepareStatement(
-        "CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL)");
-      st.executeUpdate();
-
+      conn = DriverManager.getConnection(url, "postgres", "");
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.exit(1);
