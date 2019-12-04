@@ -8,8 +8,8 @@ import org.json.JSONObject;
 class Worker {
   public static void main(String[] args) {
     try {
-      Jedis redis = connectToRedis("redis");
-      Connection dbConn = connectToDB("db");
+      Jedis redis = connectToRedis("redis-master");
+      Connection dbConn = connectToDB("postgres");
 
       System.err.println("Watching vote queue");
 
@@ -68,7 +68,7 @@ class Worker {
     try {
       Class.forName("org.postgresql.Driver");
       String url = "jdbc:postgresql://" + host + "/postgres";
-      conn = DriverManager.getConnection(url, "postgres", "");
+      conn = DriverManager.getConnection(url, "postgres", "postgres");
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.exit(1);
