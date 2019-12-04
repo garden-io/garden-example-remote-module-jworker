@@ -3,7 +3,7 @@ module:
   type: container
   name: jworker
   services:
-    - name: javaworker
+    - name: jworker
       dependencies:
         - redis
         - db-init
