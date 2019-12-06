@@ -1,9 +1,9 @@
-module:
-  description: worker
-  type: container
-  name: jworker
-  services:
-    - name: jworker
-      dependencies:
-        - redis
-        - db-init
+kind: Module
+description: worker
+type: container
+name: jworker
+services:
+  - name: jworker
+    dependencies:
+      - redis
+      - db-init
