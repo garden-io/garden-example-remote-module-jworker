@@ -4,12 +4,13 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import java.sql.*;
 import org.json.JSONObject;
+import java.util.Properties;
 
 class Worker {
   public static void main(String[] args) {
     try {
-      Jedis redis = connectToRedis("redis-master");
-      Connection dbConn = connectToDB("postgres");
+      Jedis redis = connectToRedis("redis");
+      Connection dbConn = connectToDB("db");
 
       System.err.println("Watching vote queue");
 
@@ -67,8 +68,11 @@ class Worker {
 
     try {
       Class.forName("org.postgresql.Driver");
-      String url = "jdbc:postgresql://" + host + "/postgres";
-      conn = DriverManager.getConnection(url, "postgres", "postgres");
+      String url = "jdbc:postgresql://" + host + "/" + System.getenv("PGDATABASE");
+      Properties props = new Properties();
+      props.setProperty("user", System.getenv("PGUSER"));
+      props.setProperty("password", System.getenv("PGPASSWORD"));
+      conn = DriverManager.getConnection(url, props);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.exit(1);

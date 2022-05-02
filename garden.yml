@@ -1,9 +1,4 @@
-kind: Module
-description: worker
-type: container
-name: jworker
-services:
-  - name: jworker
-    dependencies:
-      - redis
-      - db-init
+#
+# NOTE: garden.yml file of a module is ignored if a remote module is used!!!
+# https://docs.garden.io/advanced/using-remote-sources#remote-modules
+#
