@@ -1,4 +1,4 @@
 #
-# NOTE: garden.yml file of a module is ignored if a remote module is used!!!
+# NOTE: garden.yml is ignored if a remote action is used!!!
 # https://docs.garden.io/advanced/using-remote-sources#remote-modules
 #
